@@ -1,7 +1,6 @@
 from pathlib import Path
 
 import pymupdf
-# from keybert import KeyBERT
 import fitz
 import pymupdf4llm
 from langchain_core.documents import Document
@@ -74,48 +73,35 @@ class DataLoader:
             ],
         )
 
-        final_chunks = []
+        for d in header_docs:
+            d.metadata = {
+                **base_metadata,
+                **d.metadata,
+            }
 
-        for doc in header_docs:
-            chunks = recursive_splitter.split_documents(
-                [
-                    Document(
-                        page_content=doc.page_content,
-                        metadata={
-                            **base_metadata,
-                            **doc.metadata,
-                        }
-                    )
-                ]
-            )
-            final_chunks.extend(chunks)
+        # single recursive pass
+        final_chunks = recursive_splitter.split_documents(header_docs)
 
         return final_chunks
     
 
     def load_pdf(self, file_path:str):
-        files = list(Path(file_directory).rglob("*.pdf"))
-        print(f"Found {len(files)} files:")
-        for f in files:
-            print(f)
-        all_documents = []
-        for file_path in files:
-            self._get_doc_metadata(file_path)
-            all_documents.extend(self.split_markdown(str(file_path)))
-        return all_documents
+        self._get_doc_metadata(file_path)
+        documents = self.split_markdown(str(file_path))
+        return documents
 
-    def load_pdfs(self, file_directory: str):
-        files = list(Path(file_directory).rglob("*.pdf"))
-        print(f"Found {len(files)} files:")
-        for f in files:
-            print(f)
-        all_documents = []
-        for file_path in files:
-            self._get_doc_metadata(file_path)
-            all_documents.extend(self.split_markdown(str(file_path)))
-        return all_documents
+    # def load_pdfs(self, file_directory: str):
+    #     files = list(Path(file_directory).rglob("*.pdf"))
+    #     print(f"Found {len(files)} files:")
+    #     for f in files:
+    #         print(f)
+    #     all_documents = []
+    #     for file_path in files:
+    #         self._get_doc_metadata(file_path)
+    #         all_documents.extend(self.split_markdown(str(file_path)))
+    #     return all_documents
     
 if __name__ == "__main__":
     data_loader = DataLoader()
-    documents = data_loader.load_pdfs("C:/RAG-based-AI-Agent/data/contract_files/")
-    print(documents[0])
+    documents = data_loader.load_pdf("C:/RAG-based-AI-Agent/data/contract_files/contract_01_standard_clean.pdf")
+    print(documents)
