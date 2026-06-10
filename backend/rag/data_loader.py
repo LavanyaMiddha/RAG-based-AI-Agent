@@ -1,6 +1,5 @@
 from pathlib import Path
 
-import pymupdf
 import fitz
 import pymupdf4llm
 from langchain_core.documents import Document
@@ -58,8 +57,8 @@ class DataLoader:
         # print(header_docs)
 
         recursive_splitter = RecursiveCharacterTextSplitter(
-        chunk_size=512,
-        chunk_overlap=64,
+        chunk_size=1000,
+        chunk_overlap=150,
         separators=[
             "\n## ",
             "\n### ",
