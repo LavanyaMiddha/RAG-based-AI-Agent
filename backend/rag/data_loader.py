@@ -29,7 +29,6 @@ class DataLoader:
             "filename": Path(file_path).name,
             "title": pdf_metadata.get("title"),
             "author": pdf_metadata.get("author"),
-            "subject": pdf_metadata.get("subject"),
             # "keywords": "",
             "creation_date": pdf_metadata.get("creationDate"),
             "modified_date": pdf_metadata.get("modDate"),
@@ -104,4 +103,5 @@ class DataLoader:
 if __name__ == "__main__":
     data_loader = DataLoader()
     documents = data_loader.load_pdf("C:/RAG-based-AI-Agent/data/contract_files/contract_01_standard_clean.pdf")
-    print(documents)
+    print(documents[0])
+    print(type(documents[0]))

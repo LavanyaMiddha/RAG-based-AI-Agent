@@ -288,6 +288,7 @@ dependencies = [
     { name = "python-dotenv" },
     { name = "requests" },
     { name = "streamlit" },
+    { name = "torch" },
 ]
 
 [package.metadata]
@@ -315,6 +316,7 @@ requires-dist = [
     { name = "python-dotenv", specifier = ">=1.2.2" },
     { name = "requests", specifier = ">=2.34.2" },
     { name = "streamlit", specifier = ">=1.58.0" },
+    { name = "torch", specifier = ">=2.8.0" },
 ]
 
 [[package]]
