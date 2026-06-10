@@ -11,7 +11,7 @@ class Retriever:
         self.index = self.pc.Index(self.index_name)
 
 
-    def retrieve_documents(self, query:str):
+    def retrieve_documents(self, query:str, filter:dict[str:str]=None):
         dense_query_embedding = self.pc.inference.embed(
             model="llama-text-embed-v2",
             inputs=query,
@@ -30,11 +30,13 @@ class Retriever:
                 vector=d['values'],
                 sparse_vector={'indices': s['sparse_indices'], 'values': s['sparse_values']},
                 include_values=False,
-                include_metadata=True
+                include_metadata=True,
+                filter=filter
             )
         print(query_response)
 
 if __name__ == "__main__":
     retriever = Retriever()
     query = "terms of termination"
-    retriever.retrieve_documents(query)
+    filter = {"contract_id": {"$eq":"contract-02"}}
+    retriever.retrieve_documents(query, filter)
