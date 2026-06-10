@@ -43,6 +43,7 @@ class IngestDocuments:
         records = []
         for i, chunk in enumerate(chunks):
             chunk.metadata["contract_id"] = contract_id
+            chunk.metadata["text"] = chunk.page_content
 
             dense_embeddings = self.pc.inference.embed(
                 model="llama-text-embed-v2",
