@@ -2,6 +2,7 @@ from rag.data_loader import DataLoader
 from pinecone import Pinecone, ServerlessSpec
 import os
 import time
+from database.insert_data import insert_contract_data
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -66,6 +67,7 @@ class IngestDocuments:
                 },
                 "metadata": chunk.metadata
             })
+            insert_contract_data(f"{contract_id}-chunk-{i}", contract_id)
 
         self.index.upsert(vectors=records)
         print(f"Upserted {len(records)} chunks for contract '{contract_id}'")

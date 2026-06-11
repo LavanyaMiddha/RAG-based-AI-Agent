@@ -4,7 +4,6 @@ from typing import List, Literal
 class RetrievedChunk(BaseModel):
     text: str
     source_file: str
-    page: int
     score: float
     confidence: Literal["HIGH", "MEDIUM", "LOW"]
 
