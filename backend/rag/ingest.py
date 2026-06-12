@@ -67,7 +67,7 @@ class IngestDocuments:
                 },
                 "metadata": chunk.metadata
             })
-            insert_contract_data(f"{contract_id}-chunk-{i}", contract_id)
+            # insert_contract_data(f"{contract_id}-chunk-{i}", contract_id)
 
         self.index.upsert(vectors=records)
         print(f"Upserted {len(records)} chunks for contract '{contract_id}'")
